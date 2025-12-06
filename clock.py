@@ -1,19 +1,6 @@
-from time import strftime
-from tkinter import Tk, StringVar
-from tkinter.ttk import Label, Checkbutton
+import atexit
+from time import strftime, sleep
 from playsound import playsound
-import webbrowser
-
-root = Tk()
-root.title("Time Aid")
-
-def open_url(url):
-    webbrowser.open_new_tab(url)
-
-credit_title = Label(root, font=("Arial",10,""), text="PyDing TimeAid", foreground="blue", cursor="hand2")
-credit_author = Label(root, font=("Arial",10,""), text="Code by Rosier", foreground="blue", cursor="hand2")
-
-current_time = StringVar()
 
 DING_CONFIG = {
     0: "sounds/current/hour_00.mp3",
@@ -38,23 +25,22 @@ def compare_time():
     current_time = (current_hour * 100) + current_min
     if ((NIGHT_OWL and not (current_time in CHECK_RANGE)) or current_time in CHECK_RANGE) and (current_min in DING_CONFIG.keys()):
             ding(current_min)
-            print(f"ding @ {current_time}")
+            print(f"Ding @ {strftime("%I:%M%p")}")
 
 def update_time():
     if int(strftime("%S")) == 0:
+        if int(strftime("%M")) % 5 == 0:
+            print(f"It's {strftime("%I:%M%p")}")
         compare_time()
-    current_time.set(strftime("%I:%M:%S %p"))
-    label_clock.config(textvariable=current_time)
-    label_clock.after(1000, update_time)
+    sleep(1)
 
+def main():
+     while True:
+          update_time()
 
-label_clock = Label(root, font=("Monospace", 14, ""))
-root.resizable(False, False)
-update_time()
+if __name__ == "__main__":
+    main()
 
-credit_title.grid(column=0,row=0)
-label_clock.grid(column=1,row=1)
-credit_author.grid(column=2,row=0)
-credit_title.bind("<ButtonRelease-1>", lambda e: open_url("https://github.com/RoseAHill/pyding-timeaid"))
-credit_author.bind("<ButtonRelease-1>", lambda e: open_url("https://github.com/RoseAHill"))
-root.mainloop()
+@atexit.register
+def on_exit():
+     print("PyDing shutting off!")
