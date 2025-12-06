@@ -1,4 +1,4 @@
-from time import strftime, localtime
+from time import strftime
 from tkinter import Tk, StringVar
 from tkinter.ttk import Label, Checkbutton
 from playsound import playsound
