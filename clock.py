@@ -1,4 +1,3 @@
-import atexit
 from time import strftime, sleep
 from playsound import playsound
 
@@ -40,7 +39,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-@atexit.register
-def on_exit():
-     print("PyDing shutting off!")
