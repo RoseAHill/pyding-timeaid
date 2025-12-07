@@ -1,5 +1,5 @@
 from time import strftime, sleep
-from playsound import playsound
+from playsound3 import playsound
 
 DING_CONFIG = {
     0: "sounds/current/hour_00.mp3",
