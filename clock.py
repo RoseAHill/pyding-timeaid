@@ -20,8 +20,6 @@ START_TIME = 800
 END_TIME = 2200
 NIGHT_OWL = START_TIME > END_TIME
 
-CHECK_RANGE = range(START_TIME, END_TIME, 5)
-
 def notify(interval):
     if interval in MINUTE_INTERVAL_NOTIFY.keys():
         playsound(MINUTE_INTERVAL_NOTIFY[interval])
