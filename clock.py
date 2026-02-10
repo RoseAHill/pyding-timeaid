@@ -1,5 +1,5 @@
 from time import strftime, sleep
-from playsound import playsound
+from playsound3 import playsound
 
 DING_CONFIG = {
     0: "sounds/current/hour_00.mp3",
@@ -15,7 +15,7 @@ NIGHT_OWL = START_TIME > END_TIME
 CHECK_RANGE = range(START_TIME, END_TIME, 5)
 
 def ding(min):
-     if min in DING_CONFIG.keys():
+    if min in DING_CONFIG.keys():
             playsound(DING_CONFIG[min])
 
 def compare_time():
@@ -34,8 +34,8 @@ def update_time():
     sleep(1)
 
 def main():
-     while True:
-          update_time()
+    while True:
+        update_time()
 
 if __name__ == "__main__":
     main()

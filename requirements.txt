@@ -1,1 +1,1 @@
-playsound @ git+https://github.com/taconi/playsound@92385c78ec05c2fc3afad1afc5edc9d1282aa1e5
+playsound3==3.3.0
