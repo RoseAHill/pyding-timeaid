@@ -10,7 +10,7 @@ DING_CONFIG = {
 }
 
 NOTIFICATION_TEXT = "Hey! It's {time}"
-INTERVAL_NOTIFY = {
+MINUTE_INTERVAL_NOTIFY = {
     5: "sounds/current/notification.mp3"
 }
 
@@ -19,6 +19,9 @@ END_TIME = 2200
 NIGHT_OWL = START_TIME > END_TIME
 
 CHECK_RANGE = range(START_TIME, END_TIME, 5)
+
+def notify(interval):
+    pass
 
 def ding(min):
     if min in DING_CONFIG.keys():
@@ -29,8 +32,12 @@ def compare_time():
     current_hour = int(strftime("%H"))
     current_min = int(strftime("%M"))
     current_time = (current_hour * 100) + current_min
-    if ((NIGHT_OWL and not (current_time in CHECK_RANGE)) or current_time in CHECK_RANGE) and (current_min in DING_CONFIG.keys()):
+    sleeping = (NIGHT_OWL and current_time in CHECK_RANGE) or not current_time in CHECK_RANGE
+    if not sleeping:
+        if current_min in DING_CONFIG.keys():
             ding(current_min)
+        if current_min % 10 in MINUTE_INTERVAL_NOTIFY:
+             notify(current_min % 10)
 
 def update_time():
     if int(strftime("%S")) == 0:
