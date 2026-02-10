@@ -11,14 +11,14 @@ DING_CONFIG = {
 
 NOTIFICATION_TEXT = "Hey! It's {time}"
 MINUTE_INTERVAL_NOTIFY = {
-    4: "sounds/current/notification.mp3"
+    5: "sounds/current/notification.mp3"
 }
 
 START_TIME = 800
 END_TIME = 2200
 NIGHT_OWL = START_TIME > END_TIME
 
-CHECK_RANGE = range(START_TIME, END_TIME, 2)
+CHECK_RANGE = range(START_TIME, END_TIME, 5)
 
 def notify(interval):
     if interval in MINUTE_INTERVAL_NOTIFY.keys():
