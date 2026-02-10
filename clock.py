@@ -13,7 +13,7 @@ DING_CONFIG = {
 TO_NOTIFY = True
 NOTIFICATION_TEXT = "Hey! It's {time}"
 MINUTE_INTERVAL_NOTIFY = {
-    5: "sounds/current/notification.mp3"
+    3: "sounds/current/notification.mp3"
 }
 
 START_TIME = 800
