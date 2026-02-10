@@ -44,8 +44,6 @@ def compare_time():
 
 def update_time():
     if int(strftime("%S")) == 0:
-        if int(strftime("%M")) % 5 == 0:
-            print(f"It's {strftime("%I:%M%p")}")
         compare_time()
     sleep(1)
 
