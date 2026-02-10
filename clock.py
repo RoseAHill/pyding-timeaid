@@ -12,24 +12,20 @@ DING_CONFIG = {
 
 TO_NOTIFY = True
 NOTIFICATION_TEXT = "Hey! It's {time}"
-MINUTE_INTERVAL_NOTIFY = {
-    3: "sounds/current/notification.mp3"
-}
+NOTIFICATION_SOUND = "sounds/current/notification.mp3"
+INTERVAL_NOTIFY = lambda current_min: bool(current_min % 5 == 0 or current_min % 2 == 0)
 
 START_TIME = 800
 END_TIME = 2200
 NIGHT_OWL = START_TIME > END_TIME
 
-def notify(interval):
-    if interval in MINUTE_INTERVAL_NOTIFY.keys():
-        playsound(MINUTE_INTERVAL_NOTIFY[interval])
-        print(NOTIFICATION_TEXT.format(time=strftime("%I:%M%p")))
-    pass
+def notify():
+    playsound(NOTIFICATION_SOUND)
+    print(NOTIFICATION_TEXT.format(time=strftime("%I:%M%p")))
 
 def ding(min):
-    if min in DING_CONFIG.keys():
-            playsound(DING_CONFIG[min])
-            print(DING_TEXT.format(time=strftime("%I:%M%p")))
+    playsound(DING_CONFIG[min])
+    print(DING_TEXT.format(time=strftime("%I:%M%p")))
 
 def is_sleeping(current_time):
     sleeping = current_time < START_TIME
@@ -45,8 +41,8 @@ def compare_time():
     if not is_sleeping(current_time):
         if TO_DING and current_min in DING_CONFIG.keys():
             ding(current_min)
-        if TO_NOTIFY and current_min % 10 in MINUTE_INTERVAL_NOTIFY:
-             notify(current_min % 10)
+        if TO_NOTIFY and INTERVAL_NOTIFY(current_min):
+            notify()
 
 def update_time():
     if int(strftime("%S")) == 0:
