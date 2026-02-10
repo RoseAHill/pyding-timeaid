@@ -1,8 +1,11 @@
 from time import strftime, sleep
 from playsound3 import playsound
 
+MUTE_DING = False
+MUTE_NOTIFY = True
+
 TO_DING = True
-DING_TEXT = "Ding @ {time}"
+DING_TEXT = "Ding! It's {time}"
 DING_CONFIG = {
     0: "sounds/current/hour_00.mp3",
     15: "sounds/current/quarter_15.mp3",
@@ -11,20 +14,22 @@ DING_CONFIG = {
 }
 
 TO_NOTIFY = True
-NOTIFICATION_TEXT = "Hey! It's {time}"
+NOTIFICATION_TEXT = " ...  It's {time}"
 NOTIFICATION_SOUND = "sounds/current/notification.mp3"
-INTERVAL_NOTIFY = lambda current_min: bool(current_min % 5 == 0 or current_min % 2 == 0)
+INTERVAL_NOTIFY = lambda current_min: bool(current_min % 5 == 0)
 
 START_TIME = 800
 END_TIME = 2200
 NIGHT_OWL = START_TIME > END_TIME
 
 def notify():
-    playsound(NOTIFICATION_SOUND)
+    if not MUTE_NOTIFY:
+        playsound(NOTIFICATION_SOUND)
     print(NOTIFICATION_TEXT.format(time=strftime("%I:%M%p")))
 
 def ding(min):
-    playsound(DING_CONFIG[min])
+    if not MUTE_DING:
+        playsound(DING_CONFIG[min])
     print(DING_TEXT.format(time=strftime("%I:%M%p")))
 
 def is_sleeping(current_time):
