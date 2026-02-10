@@ -1,6 +1,7 @@
 from time import strftime, sleep
 from playsound3 import playsound
 
+TO_DING = True
 DING_TEXT = "Ding @ {time}"
 DING_CONFIG = {
     0: "sounds/current/hour_00.mp3",
@@ -9,6 +10,7 @@ DING_CONFIG = {
     45: "sounds/current/quarter_45.mp3"
 }
 
+TO_NOTIFY = True
 NOTIFICATION_TEXT = "Hey! It's {time}"
 MINUTE_INTERVAL_NOTIFY = {
     5: "sounds/current/notification.mp3"
@@ -31,15 +33,21 @@ def ding(min):
             playsound(DING_CONFIG[min])
             print(DING_TEXT.format(time=strftime("%I:%M%p")))
 
+def is_sleeping(current_time):
+    sleeping = current_time < START_TIME
+    if NIGHT_OWL:
+        sleeping = sleeping or current_time < END_TIME
+    else:
+        sleeping = sleeping or current_time > END_TIME
+
 def compare_time():
     current_hour = int(strftime("%H"))
     current_min = int(strftime("%M"))
     current_time = (current_hour * 100) + current_min
-    sleeping = (NIGHT_OWL and current_time in CHECK_RANGE) or not current_time in CHECK_RANGE
-    if not sleeping:
-        if current_min in DING_CONFIG.keys():
+    if not is_sleeping(current_time):
+        if TO_DING and current_min in DING_CONFIG.keys():
             ding(current_min)
-        if current_min % 10 in MINUTE_INTERVAL_NOTIFY:
+        if TO_NOTIFY and current_min % 10 in MINUTE_INTERVAL_NOTIFY:
              notify(current_min % 10)
 
 def update_time():
