@@ -48,4 +48,5 @@ __Optional Dependencies:__
    - `quarter_15.mp3`
    - `half_30.mp3`
    - `quarter_45.mp3`
+   - `notification.mp3`
 2. Rename the `current` folder to something unique and rename the new custom folder as `current`.
