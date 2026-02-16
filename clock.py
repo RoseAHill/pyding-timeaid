@@ -36,7 +36,7 @@ def ding(sleeping, min):
 def is_sleeping(current_time):
     sleeping = current_time < START_TIME
     if NIGHT_OWL:
-        sleeping = sleeping or current_time < END_TIME
+        sleeping = sleeping and current_time < END_TIME
     else:
         sleeping = sleeping or current_time > END_TIME
     return sleeping
